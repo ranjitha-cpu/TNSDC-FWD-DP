@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Digital Portfolio</title>
+  <meta name="description" content="Digital portfolio — projects, skills, contact." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & ROOT ---------- */
+    :root{
+      --bg:#0b1220; --surface:#0f172a; --card:#0b1220;
+      --text:#e6eef7; --muted:#94a3b8; --brand:#38bdf8; --accent:#8b5cf6;
+      --ring: rgba(56,189,248,0.18);
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 10px 30px rgba(2,8,23,0.35);
+    }
+    :root.light{
+      --bg:#ffffff; --surface:#f7fafc; --card:#ffffff;
+      --text:#0b1220; --muted:#475569; --brand:#0ea5e9; --accent:#7c3aed;
+      --ring: rgba(13,148,136,0.12); --glass: rgba(15,23,42,0.02);
+      --shadow: 0 8px 24px rgba(15,23,42,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale; line-height:1.5;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:0 1rem}
+
+    /* ---------- NAV ---------- */
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
+    nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{font-weight:800;display:flex;gap:.5rem;align-items:center}
+    .nav-links{display:flex;gap:.6rem;align-items:center;list-style:none;margin:0;padding:0}
+    .nav-links a{padding:.4rem .65rem;border-radius:10px;color:var(--text);opacity:.95}
+    .nav-links a:hover{background:var(--glass);transform:translateY(-2px)}
+    .theme-btn{border:0;background:transparent;color:var(--text);font-size:18px;cursor:pointer;padding:.35rem .5rem;border-radius:8px}
+
+    /* ---------- HERO ---------- */
+    .hero{padding:5.2rem 0;display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
+    .hero h1{font-size:clamp(1.9rem,4vw,3rem);margin:.2rem 0}
+    .eyebrow{color:var(--muted);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem}
+    .hero .ctas{display:flex;gap:.7rem;margin-top:1rem}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border-radius:12px;border:0;cursor:pointer;font-weight:600}
+    .btn.primary{background:linear-gradient(90deg,var(--brand),var(--accent));color:#fff;box-shadow:var(--shadow)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+
+    .avatar{width:100%;max-width:360px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(180deg,var(--brand),var(--accent));height:100%}
+    .avatar svg{width:100%;height:100%;display:block}
+
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .avatar{max-width:280px;margin:0 auto}
+    }
+
+    /* ---------- SECTIONS ---------- */
+    .section{padding:4rem 0}
+    .section.alt{background:var(--surface)}
+    h2{margin:0 0 1rem 0;font-size:1.6rem}
+    p.lead{color:var(--muted);margin-top:0}
+
+    /* SKILLS */
+    .tags{display:flex;flex-wrap:wrap;gap:.5rem}
+    .tag{padding:.35rem .6rem;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600;color:var(--muted)}
+
+    /* PROJECTS */
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .card{background:var(--card);padding:1rem;border-radius:14px;border:1px solid rgba(255,255,255,0.02);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.6rem}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:10px}
+
+    /* CONTACT FORM */
+    .form{display:grid;gap:.6rem}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    @media (max-width:700px){ .row{grid-template-columns:1fr} }
+    input,textarea{width:100%;padding:.7rem;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);outline:none}
+    input:focus,textarea:focus{box-shadow:0 0 0 6px var(--ring);border-color:var(--brand)}
+
+    footer{padding:2rem 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02);margin-top:2rem}
+
+    /* small util */
+    .muted{color:var(--muted)}
+    .flex{display:flex;gap:.6rem;align-items:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand"><span style="font-size:18px">◆</span><span>MyPortfolio</span></div>
+        <ul class="nav-links" role="navigation" aria-label="Main">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><button id="themeToggle" class="theme-btn" title="Toggle theme">🌙</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero container" id="hero" aria-label="Intro">
+      <div>
+        <p class="eyebrow">Hi, I'm</p>
+        <h1>Your Name — Frontend Developer</h1>
+        <p class="lead">I build accessible, responsive web interfaces. I like performance, clean UI, and writing maintainable code.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn ghost" href="#contact">Contact Me</a>
+        </div>
+        <div style="margin-top:1rem" class="muted">Based in Your City • Open to freelance or full-time</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center">
+        <div class="avatar" role="img" aria-label="Profile illustration">
+          <!-- simple decorative svg -->
+          <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#38bdf8"/>
+                <stop offset="1" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#g1)"/>
+            <g transform="translate(300,300)">
+              <circle cx="0" cy="-40" r="70" fill="rgba(255,255,255,0.95)"/>
+              <rect x="-120" y="60" width="240" height="140" rx="28" fill="rgba(255,255,255,0.95)"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section container">
+      <h2>About</h2>
+      <p class="lead">I craft front-end experiences with HTML, CSS and JavaScript. I focus on accessibility, performance and clean UI.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem">
+        <a class="btn primary" href="#" id="downloadResume">Download Résumé</a>
+        <a class="btn ghost" href="#contact">Hire Me</a>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section alt">
+      <div class="container">
+        <h2>Skills</h2>
+        <div class="tags" style="margin-bottom:.8rem">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Accessibility</span>
+          <span class="tag">React (basics)</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+          <div>
+            <h3 style="margin:.2rem 0">Frontend</h3>
+            <p class="muted">HTML5, CSS3, Flexbox, Grid, animations, design systems.</p>
+          </div>
+          <div>
+            <h3 style="margin:.2rem 0">Tools</h3>
+            <p class="muted">Git, VS Code, Chrome DevTools, Figma, Webpack/Vite.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2>Projects</h2>
+        <div class="projects" aria-live="polite">
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=1200&auto=format&fit=crop" alt="Project thumbnail">
+            <h3>Landing Page</h3>
+            <p class="muted">Responsive marketing landing page with micro-interactions.</p>
+            <div class="flex" style="margin-top:auto">
+              <a class="btn small" href="#">Live</a>
+              <a class="btn ghost small" href="#">Code</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Project thumbnail">
+            <h3>Dashboard UI</h3>
+            <p class="muted">Accessible dashboard with charts and keyboard navigation.</p>
+            <div class="flex" style="margin-top:auto">
+              <a class="btn small" href="#">Live</a>
+              <a class="btn ghost small" href="#">Code</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Project thumbnail">
+            <h3>Blog Template</h3>
+            <p class="muted">Minimal, readable blog template with dark mode support.</p>
+            <div class="flex" style="margin-top:auto">
+              <a class="btn small" href="#">Live</a>
+              <a class="btn ghost small" href="#">Code</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section alt">
+      <div class="container">
+        <h2>Contact</h2>
+        <form id="contactForm" class="form" autocomplete="on" novalidate>
+          <div class="row">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required placeholder="Your name">
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@example.com">
+            </div>
+          </div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
+
+          <div style="display:flex;align-items:center;gap:.7rem;margin-top:.6rem">
+            <button type="submit" class="btn primary">Send Message</button>
+            <div class="muted" id="formStatus" aria-live="polite"></div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+        <div class="muted">© <span id="year"></span> Your Name</div>
+        <div class="muted">Made with ❤️ • HTML/CSS/JS</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ----------------------------
+    // Lightweight JS for interactions
+    // ----------------------------
+    (function(){
+      const root = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const yearEl = document.getElementById('year');
+      const contactForm = document.getElementById('contactForm');
+      const formStatus = document.getElementById('formStatus');
+      const downloadResume = document.getElementById('downloadResume');
+
+      // year
+      yearEl.textContent = new Date().getFullYear();
+
+      // theme initial (persist)
+      const saved = localStorage.getItem('theme');
+      if(saved === 'light') root.classList.add('light');
+
+      function updateThemeUI(){
+        themeToggle.textContent = root.classList.contains('light') ? '🌞' : '🌙';
+      }
+      updateThemeUI();
+
+      themeToggle.addEventListener('click', () => {
+        root.classList.toggle('light');
+        localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+        updateThemeUI();
+      });
+
+      // contact form: basic validation + demo submission
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        formStatus.textContent = '';
+        const name = contactForm.name.value.trim();
+        const email = contactForm.email.value.trim();
+        const message = contactForm.message.value.trim();
+
+        // simple client validation
+        if(!name){ formStatus.textContent = 'Please enter your name.'; return; }
+        if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ formStatus.textContent = 'Please enter a valid email.'; return; }
+        if(!message || message.length < 10){ formStatus.textContent = 'Message must be at least 10 characters.'; return; }
+
+        // Demo: If you have a backend, POST to /api/contact
+        // Here we just simulate success (replace with real fetch to your server)
+        formStatus.textContent = 'Sending…';
+        try{
+          // Uncomment & adapt this fetch when you set up a real backend:
+          /*
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ name, email, message })
+          });
+          if(!res.ok) throw new Error('Network error');
+          */
+
+          // Simulated delay
+          await new Promise(r => setTimeout(r, 700));
+          formStatus.textContent = 'Thanks — message sent!';
+          contactForm.reset();
+        } catch(err){
+          formStatus.textContent = 'Error sending message. Try again later.';
+        }
+      });
+
+      // Resume download (demo)
+      downloadResume.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Demo: create a small text resume and download it.
+        const resume = `Name: Your Name\nTitle: Frontend Developer\nEmail: you@example.com\n\nSummary:\\nA short bio here...`;
+        const blob = new Blob([resume], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resume.txt'; // change to resume.pdf when you have a real file
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+
+      // smooth scrolling for nav links
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (ev) => {
+          const href = a.getAttribute('href');
+          if(href.length > 1){
+            ev.preventDefault();
+            const el = document.querySelector(href);
+            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
